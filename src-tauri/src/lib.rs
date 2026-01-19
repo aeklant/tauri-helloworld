@@ -20,13 +20,13 @@ fn get_user(user_state: tauri::State<Mutex<User>>) -> User {
 }
 
 #[tauri::command]
-fn login(user_state: tauri::State<Mutex<User>>, name: String, password: String) {
+fn login(user_state: tauri::State<Mutex<User>>, user: User) {
     // Given a user state and some login credentials
     // Update the state to contain said credentials
-    *user_state.lock().unwrap() = User { name, password };
+    *user_state.lock().unwrap() = user;
 }
 
-#[derive(Clone, serde::Serialize)]
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
 struct User {
     name: String,
     password: String,
