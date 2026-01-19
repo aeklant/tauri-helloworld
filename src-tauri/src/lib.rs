@@ -1,7 +1,10 @@
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_user]) 
+        .invoke_handler(tauri::generate_handler![
+            get_user,
+            login,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -19,6 +22,11 @@ fn get_user() -> Vec<User> {
     };
 
     vec![user1, user2]
+}
+
+#[tauri::command]
+fn login(name: String, password: String) -> bool {
+    true
 }
 
 #[derive(serde::Serialize)]
