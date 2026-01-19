@@ -13,8 +13,7 @@
     }
 
     async function doLogin() {
-      let login = await invoke("login", {name: "Some", password: "User"})
-      console.log()
+      await invoke("login", {name: "Some", password: "User"})
     }
   </script>
 </html>
