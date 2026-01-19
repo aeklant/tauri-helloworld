@@ -1,0 +1,14 @@
+<html>
+  <h3>Hello Tauri World!</h3>
+
+  <button onclick="getUser()">Get User</button>
+
+  <script> 
+    const invoke = window.__TAURI__.core.invoke;
+
+    async function getUser() {
+      let user = await invoke("get_user");
+      console.log(user)
+    }
+  </script>
+</html>
