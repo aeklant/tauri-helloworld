@@ -13,26 +13,20 @@ pub fn run() {
 }
 
 #[tauri::command]
-fn get_user() -> Vec<User> {
-    let user1 = User {
-        name: String::from("Some"),
-        password: String::from("User")
-    };
+fn get_user(user_state: tauri::State<Mutex<User>>) -> User {
+    let user = &*user_state.lock().unwrap();
 
-    let user2 = User {
-        name: String::from("Some Other"),
-        password: String::from("User")
-    };
-
-    vec![user1, user2]
+    user.clone()
 }
 
 #[tauri::command]
-fn login(name: String, password: String) -> bool {
-    true
+fn login(user_state: tauri::State<Mutex<User>>, name: String, password: String) {
+    // Given a user state and some login credentials
+    // Update the state to contain said credentials
+    *user_state.lock().unwrap() = User { name, password };
 }
 
-#[derive(serde::Serialize)]
+#[derive(Clone, serde::Serialize)]
 struct User {
     name: String,
     password: String,
